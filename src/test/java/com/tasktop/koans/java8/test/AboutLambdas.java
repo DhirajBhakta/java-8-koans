@@ -93,9 +93,8 @@ public class AboutLambdas {
 		Yeller yeller = new Yeller();
 
 		String result = yeller.yell("echo", (echo) -> {
-			return null; // FIXME: Return the echo value
+			return echo; // FIXME: Return the echo value
 		});
-
 		assertThat(result).isEqualTo("echo");
 	}
 
@@ -104,7 +103,7 @@ public class AboutLambdas {
 		Yeller yeller = new Yeller();
 
 		String result = yeller.yell("echo", echo -> {
-			return null; // FIXME: Return the echo value
+			return echo; // FIXME: Return the echo value
 		});
 
 		assertThat(result).isEqualTo("echo");
@@ -116,7 +115,7 @@ public class AboutLambdas {
 		final String echoSufix = ".echo";
 
 		String result = yeller.yell("echo", echo -> {
-			String myEcho = null; // FIXME: Modify the echo and concatenate the echoSufix
+			String myEcho = "echo.".concat(echo); // FIXME: Modify the echo and concatenate the echoSufix
 			return myEcho;
 		});
 
@@ -128,7 +127,7 @@ public class AboutLambdas {
 		Yeller yeller = new Yeller();
 
 		// FIXME: Pass in a lambda like above but without any parentheses, brackets, return statement and semi colons
-		String result = yeller.yell("echo", (Function<String, String>) null);
+		String result = yeller.yell("echo", (Function<String, String>) echo -> echo);
 
 		assertThat(result).isEqualTo("echo");
 	}
@@ -165,7 +164,7 @@ public class AboutLambdas {
 	public void java8_passingSuppliers() {
 		Yeller yeller = new Yeller();
 
-		String result = yeller.yell(() -> null); // FIXME: Let the supplier return the echo
+		String result = yeller.yell(() -> "echo"); // FIXME: Let the supplier return the echo
 
 		assertThat(result).isEqualTo("echo");
 	}
@@ -190,6 +189,7 @@ public class AboutLambdas {
 		Yeller yeller = new Yeller();
 
 		yeller.yell("echo", echo -> {
+			yeller.setEcho(echo);
 		}); // FIXME: consume the provided value and pass it to yeller.setEcho
 
 		assertThat(yeller.getEcho()).isEqualTo("echo");
@@ -216,7 +216,7 @@ public class AboutLambdas {
 		Yeller yeller = new Yeller();
 		yeller.setEcho("echo");
 
-		boolean hasEcho = yeller.hasEcho(echo -> "echo".equals(null)); // FIXME: Fix the predicate to do a real equal check
+		boolean hasEcho = yeller.hasEcho(echo -> "echo".equals(echo)); // FIXME: Fix the predicate to do a real equal check
 
 		assertThat(hasEcho).isTrue();
 	}
@@ -250,7 +250,7 @@ public class AboutLambdas {
 	public void java8_passingOwnFunctionalInterfaces() {
 		Yeller yeller = new Yeller();
 
-		String echo = yeller.yell("hello", "echo", (echo1, echo2) -> null); // FIXME: let your concatenator concatenate :)
+		String echo = yeller.yell("hello", "echo", (echo1, echo2) -> echo1 + " ".concat(echo2)); // FIXME: let your concatenator concatenate :)
 
 		assertThat(echo).isEqualTo("hello echo");
 	}
