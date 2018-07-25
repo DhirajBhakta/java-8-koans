@@ -56,7 +56,7 @@ public class AboutStreams {
 		List<String> list = Lists.newArrayList("a", "b", "a", "b");
 
 		// FIXME: fill in the predicate that filders for "a"
-		List<String> actualList = list.stream().filter(element -> false).collect(Collectors.toList());
+		List<String> actualList = list.stream().filter(element -> "a".equals(element)).collect(Collectors.toList());
 
 		assertThat(actualList).isEqualTo(Lists.newArrayList("a", "a"));
 	}
@@ -89,7 +89,7 @@ public class AboutStreams {
 		List<String> actualList = list.stream()
 				.filter(element -> element != null)
 				.filter(element -> element.startsWith("a."))
-				.sorted(null) // FIXME: use string compare to. Think about Method references.
+				.sorted() // FIXME: use string compare to. Think about Method references.
 				.collect(Collectors.toList());
 
 		assertThat(actualList).isEqualTo(Lists.newArrayList("a.1", "a.2"));
@@ -113,7 +113,7 @@ public class AboutStreams {
 
 		// FIXME: we need a function that converts Strings to integers. I wonder if a method on Integer could be used
 		// parsed... I mean used for that.
-		Function<? super String, ? extends Integer> mapper = null;
+		Function<? super String, ? extends Integer> mapper = (str) -> Integer.parseInt(str);
 		List<Integer> actualList = list.stream().map(mapper).collect(Collectors.toList());
 
 		assertThat(actualList).isEqualTo(Lists.newArrayList(1, 2, 3));
@@ -142,7 +142,7 @@ public class AboutStreams {
 		List<String> list = Lists.newArrayList("a.2", "b.1", "a.1", "b.2");
 
 		// FIXME: fill in a predicate that filters for "a.1"
-		String result = list.stream().filter(element -> false).findFirst().get();
+		String result = list.stream().filter(element -> "a.1".equals(element)).findFirst().get();
 
 		assertThat(result).isEqualTo("a.1");
 	}
@@ -165,14 +165,14 @@ public class AboutStreams {
 
 		// FIXME: write an accumulator that creates a sum. Remember if a lambda consumes more than one parameter you
 		// have to use parentheses.
-		Integer sum = list.stream().reduce(null).get();
+		Integer sum = list.stream().reduce((a, b) -> a + b).get();
 
 		assertThat(sum).isEqualTo(5);
 	}
 
 	@Test
 	public void java8_streamsAreNotLimitedToCollections() {
-		String string = null; // FIXME: create a string that can be splitted by "," and has a,b,c as elements.
+		String string = "a,b,c"; // FIXME: create a string that can be splitted by "," and has a,b,c as elements.
 
 		List<String> elements = Pattern.compile(",").splitAsStream(string).collect(Collectors.toList());
 
