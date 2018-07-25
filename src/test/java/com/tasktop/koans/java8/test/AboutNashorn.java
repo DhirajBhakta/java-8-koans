@@ -38,7 +38,7 @@ public class AboutNashorn {
 		ScriptEngineManager engineManager = new ScriptEngineManager();
 		ScriptEngine engine = engineManager.getEngineByName("nashorn");
 
-		Object result = engine.eval(""); // FIXME: pass in a script that produces 2
+		Object result = engine.eval("4/2"); // FIXME: pass in a script that produces 2
 
 		assertEquals(2, result);
 	}
@@ -48,7 +48,7 @@ public class AboutNashorn {
 		ScriptEngineManager engineManager = new ScriptEngineManager();
 		ScriptEngine engine = engineManager.getEngineByName("nashorn");
 
-		engine.eval("function sayHello() { return 'Good Bye' };"); // FIXME: changed the registered function to return hello.
+		engine.eval("function sayHello() { return 'Hello' };"); // FIXME: changed the registered function to return hello.
 		Object result = ((Invocable) engine).invokeFunction("sayHello");
 
 		assertEquals("Hello", result);
